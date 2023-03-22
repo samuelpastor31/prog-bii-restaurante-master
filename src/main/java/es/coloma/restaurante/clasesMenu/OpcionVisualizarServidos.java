@@ -2,18 +2,18 @@ package es.coloma.restaurante.clasesMenu;
 
 import es.coloma.restaurante.Restaurant;
 
-public class OpcionVisualizarOrden extends Opcion{
+public class OpcionVisualizarServidos extends Opcion{
 
     private Restaurant restaurant;
 
-    public OpcionVisualizarOrden(Restaurant restaurant) {
-        super("Visualizar pedidos pendientes");
+    public OpcionVisualizarServidos(Restaurant restaurant) {
+        super("Visualizar pedidos servidos");
         this.restaurant = restaurant;
     }
 
 
     @Override
     public void ejecutar() {
-        restaurant.viewOrder();
+        restaurant.viewOrderServidos();
     }
 }

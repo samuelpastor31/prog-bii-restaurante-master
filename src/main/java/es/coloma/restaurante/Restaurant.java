@@ -74,6 +74,22 @@ public class Restaurant {
         }
     }
 
+    public void viewOrderServidos() {
+        if (historicoPedidos.getOrders().size()>0) {
+            listAllOrdersServed();
+            String pregunta = AnsiColor.colorize(AnsiColor.HIGH_INTENSITY, "Introduzca el código de la orden que deseas Visualizar");
+            String orderCode = GestorIO.obtenerCadena(pregunta);
+            Order orderBuscada = new Order(orderCode);
+            if (!historicoPedidos.getOrders().contains(orderBuscada)) {
+                System.out.println(AnsiColor.colorize(AnsiColor.RED, "El pedido introducido no existe"));
+            } else {
+                showOrder(historicoPedidos.getOrders().get(historicoPedidos.getOrders().indexOf(orderBuscada)));
+            }
+        }else{
+            System.out.println("Crea y sirve algún pedido");
+        }
+    }
+
     /**
      *  Permite marcar una orden como servida
      */
@@ -151,6 +167,6 @@ public class Restaurant {
     }
 
     public void devolverPedidoPreparado(){
-        colaPedidosPendientes.retornar(orderList.get(orderList.size()));
+        colaPedidosPendientes.retornar(orderList.get(orderList.size()-1));
     }
 }

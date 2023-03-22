@@ -25,6 +25,7 @@ public class MenuApp {
                 "=== Bienvenido al bar de los 20 Montaditos ==="+AnsiColor.ANSI_RESET+"\n==============================================");
         menu.anyadir(new OpcionCrearPedido(restaurant));
         menu.anyadir(new OpcionVisualizarOrden(restaurant));
+        menu.anyadir(new OpcionVisualizarServidos(restaurant));
         menu.anyadir(new OpcionListarPedidos(restaurant));
         menu.anyadir(new OpcionListarServidos(restaurant));
         menu.anyadir(new OpcionPrepararPedido(restaurant));

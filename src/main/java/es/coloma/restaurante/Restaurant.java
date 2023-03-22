@@ -7,6 +7,10 @@ import es.coloma.utils.GestorIO;
 import es.coloma.views.OrderView;
 import es.coloma.views.OrderViewList;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class Restaurant {
@@ -74,9 +78,35 @@ public class Restaurant {
         }
     }
 
+    public void listAllOrdersServedFecha() {
+        String fecha = pedirFechaVerPedidos();
+
+
+            if (historicoPedidos.getOrders().size() == 0) {
+                System.out.println(AnsiColor.colorize(AnsiColor.RED, "No existen pedidos ya servidos en el restaurante"));
+            } else {
+                OrderViewList orderViewList = new OrderViewList(new ArrayList<>(historicoPedidos.filtrarPedidosFechas(fecha)));
+                System.out.println(orderViewList);
+            }
+    }
+
+    public String pedirFechaVerPedidos (){
+        String question = String.format("Introduzca la fecha del pedido que deseas ver en formato %s \n", AnsiColor.colorize(AnsiColor.HIGH_INTENSITY, "dd/mm/yyyy"));
+        String date = GestorIO.obtenerCadena(question);
+        try {
+            String dateAsString = date;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            return LocalDate.parse(dateAsString, formatter).toString();
+        } catch (DateTimeParseException e) {
+            System.out.println("\"El formato introducido no es válido. Recuerde (dd/mm/yyyy)\"");
+        }
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
+
     public void viewOrderServidos() {
+
         if (historicoPedidos.getOrders().size()>0) {
-            listAllOrdersServed();
+            listAllOrdersServedFecha();
             String pregunta = AnsiColor.colorize(AnsiColor.HIGH_INTENSITY, "Introduzca el código de la orden que deseas Visualizar");
             String orderCode = GestorIO.obtenerCadena(pregunta);
             Order orderBuscada = new Order(orderCode);
@@ -93,7 +123,7 @@ public class Restaurant {
     /**
      *  Permite marcar una orden como servida
      */
-    public void serveOrder() {
+    /*public void serveOrder() {
         if(!showPendingOrderList()){
             return;
         }
@@ -107,7 +137,7 @@ public class Restaurant {
             System.out.println(AnsiColor.colorize(AnsiColor.GREEN, "El pedido ha sido marcado como servido"));
         }
 
-    }
+    }*/
 
     /**
      * muestra la lista de ordenes pendientes de servir

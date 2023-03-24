@@ -1,4 +1,5 @@
 package es.coloma.restaurante;
+import es.coloma.excepciones.PedidoNoCancelableException;
 import es.coloma.pedidos.ColaPedidosPendientes;
 import es.coloma.pedidos.HistoricoPedidos;
 import es.coloma.products.Catalogue;
@@ -62,6 +63,24 @@ public class Restaurant {
         }
     }
 
+    public void listAllOrdersServedToCancelIt() {
+        if (orderList.size() == 0) {
+            System.out.println(AnsiColor.colorize(AnsiColor.RED, "No existen pedidos por servir en el restaurante"));
+        } else {
+            OrderViewList orderViewList = new OrderViewList(new ArrayList<>(orderList));
+            System.out.println(orderViewList);
+            String orderCode =GestorIO.obtenerCadena("¿Que pedido deseas cancelar?");
+            Order order = new Order(orderCode);
+
+            if (orderList.contains(order)){
+                historicoPedidos.anyadir(order);
+                orderList.remove(order);
+                System.out.println("Pedido eliminado y añadido al historial");
+
+            }else throw new PedidoNoCancelableException();
+        }
+    }
+
 
     /**
      * Permite acceder a la información de un pedido
@@ -79,7 +98,7 @@ public class Restaurant {
     }
 
     public void listAllOrdersServedFecha() {
-        String fecha = pedirFechaVerPedidos();
+        String fecha = validarFecha();
 
 
             if (historicoPedidos.getOrders().size() == 0) {
@@ -90,7 +109,7 @@ public class Restaurant {
             }
     }
 
-    public String pedirFechaVerPedidos (){
+    public String validarFecha(){
         String question = String.format("Introduzca la fecha del pedido que deseas ver en formato %s \n", AnsiColor.colorize(AnsiColor.HIGH_INTENSITY, "dd/mm/yyyy"));
         String date = GestorIO.obtenerCadena(question);
         try {

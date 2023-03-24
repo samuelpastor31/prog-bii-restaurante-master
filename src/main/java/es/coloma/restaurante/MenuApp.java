@@ -29,8 +29,12 @@ public class MenuApp {
         menu.anyadir(new OpcionListarPedidos(restaurant));
         menu.anyadir(new OpcionListarServidos(restaurant));
         menu.anyadir(new OpcionPrepararPedido(restaurant));
+        menu.anyadir(new OpcionCancelarPedido(restaurant));
         menu.anyadir(new OpcionSalir());
         menu.ejecutar();
+
+
+
         /*int option;
         do {
             showWelcomeBanner();
@@ -53,7 +57,7 @@ public class MenuApp {
         }else {
             AnsiColor.errorOutput("Opción no válida");
         }
-    }*/
+    }
 
     private int getUserOption() {
         System.out.println(OPTION_CREATE_ORDER + ". Crear nuevo pedido");
@@ -74,5 +78,5 @@ public class MenuApp {
         System.out.println("==============================================");
         AnsiColor.colorizeOutput(AnsiColor.BLUE, "=========== Esperamos verte pronto ===========");
         System.out.println("==============================================");
-    }
+    }*/
 }
